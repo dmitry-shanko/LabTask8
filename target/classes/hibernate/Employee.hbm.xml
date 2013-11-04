@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.epam.hibernateapp.model">
+	<class name="Employee" lazy="false">
+		<cache usage="read-only" include="all" />
+		<id name="id" type="java.lang.Integer">
+			<generator class="sequence">
+				<param name="sequence">F_LAB_TASK_8_EMPLOYEE_SEQ</param>
+			</generator>
+		</id>
+		<property name="firstName" type="string" />
+		<property name="lastName" type="string" />
+		<many-to-one name="address" class="Address" column="ADDRESS_ID" />
+		<set name="workstations" batch-size="100"> 
+			<key column="EMPLOYEE_ID" />
+			<one-to-many class="Workstation" />
+		</set>
+	</class>
+</hibernate-mapping>

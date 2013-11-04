@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+
+	<form-beans>
+		<form-bean name="employeeForm"
+			type="com.epam.hibernateapp.presentation.form.EmployeeForm" />
+	</form-beans>
+
+	<global-forwards>
+		<forward name="mainpage" path="/employee.do" />
+		<forward name="employeeList" path="employeepage" />
+		<forward name="error" path="employeeerrorpage" />
+	</global-forwards>
+
+	<action-mappings>
+		<action path="/index" forward="/employee.do" />
+
+		<action path="/employee"
+			type="com.epam.hibernateapp.presentation.action.EmployeeAction" name="employeeForm"
+			validate="false" parameter="employeeList">
+		</action>
+		
+		<action path="/add"
+			type="com.epam.hibernateapp.presentation.action.EmployeeAction" name="employeeForm"
+			validate="false" parameter="addContent">
+		</action>
+
+	</action-mappings>
+
+	<controller
+		processorClass="org.springframework.web.struts.DelegatingTilesRequestProcessor" />
+
+	<message-resources parameter="jsp.MessageResources"
+		null="false" />
+
+	<!-- Spring Struts plugin -->
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+		<set-property property="contextConfigLocation" value="classpath:/spring-config.xml" />
+	</plug-in>
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/Tiles/tiles-defs.xml" />
+		<set-property property="moduleAware" value="false" />
+	</plug-in>
+
+</struts-config>

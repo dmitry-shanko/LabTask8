@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.epam.hibernateapp.model">
+	<class name="Office" lazy="false">
+	<cache usage="read-only" include="all" />
+		<id name="id" type="java.lang.Integer">
+			<generator class="sequence">
+				<param name="sequence">F_LAB_TASK_8_OFFICE_SEQ</param>
+			</generator>
+		</id>
+		<many-to-one name="address" class="Address" column="ADDRESS_ID" />
+		<many-to-one name="company" class="Company" column="COMPANY_ID" />
+		<set name="workstations">
+			<key column="OFFICE_ID" />
+			<one-to-many class="Workstation" />
+		</set>
+		<property name="employeesNumber" type="java.lang.Integer">
+			<formula>
+				(SELECT COUNT(work.EMPLOYEE_ID) FROM T_LAB_TASK_8_WORKSTATION work WHERE
+				work.OFFICE_ID =
+				ID)
+			</formula>
+		</property>
+	</class>
+</hibernate-mapping>
